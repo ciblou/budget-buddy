@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b1220" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Budget Buddy</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div class="brandText">
+            <div class="brandName">Budget Buddy</div>
+            <div class="brandTag">Offline-first spending tracker</div>
+          </div>
+        </div>
+        <nav class="tabs" aria-label="Primary">
+          <a href="#/" data-route="/" class="tab">Dashboard</a>
+          <a href="#/add" data-route="/add" class="tab">Add</a>
+          <a href="#/receipts" data-route="/receipts" class="tab">Receipts</a>
+          <a href="#/insights" data-route="/insights" class="tab">Suggestions</a>
+          <a href="#/settings" data-route="/settings" class="tab">Settings</a>
+        </nav>
+      </header>
+
+      <main id="root" class="main" role="main" aria-live="polite"></main>
+    </div>
+
+    <div class="toastHost" id="toastHost" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- OCR (loaded on-demand in JS, but preconnect helps) -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
