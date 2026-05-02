@@ -149,7 +149,9 @@ function extractTotalsFromOcr(text) {
 async function ensureServiceWorker() {
   if (!("serviceWorker" in navigator)) return;
   try {
-    await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+    await navigator.serviceWorker.register(new URL("./sw.js", import.meta.url), {
+      scope: new URL("./", import.meta.url)
+    });
   } catch {
     // ignore; app still works online.
   }

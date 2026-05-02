@@ -1,21 +1,38 @@
 /* Service worker for offline-first PWA.
    Note: for a simple static app we precache core shell assets and cache-first them. */
 
-const CACHE = "budget-buddy-v1";
-const PRECACHE_URLS = [
-  "/",
-  "/index.html",
-  "/styles.css",
-  "/app.js",
-  "/db.js",
-  "/insights.js",
-  "/manifest.webmanifest",
-  "/icon.svg"
+const CACHE = "budget-buddy-v2";
+
+function basePath() {
+  // Service worker scope should match the deployed folder (works for GitHub Pages project sites too).
+  let p = new URL(self.registration.scope).pathname;
+  if (!p.endsWith("/")) p += "/";
+  return p;
+}
+
+function absUrl(relOrAbs) {
+  const rel = String(relOrAbs || "");
+  if (rel.startsWith("/")) return new URL(rel, self.location.origin).toString();
+  return new URL(rel, `${self.location.origin}${basePath()}`).toString();
+}
+
+const PRECACHE_RELS = [
+  "./",
+  "./index.html",
+  "./styles.css",
+  "./app.js",
+  "./db.js",
+  "./insights.js",
+  "./manifest.webmanifest",
+  "./icon.svg"
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(PRECACHE_URLS)).then(() => self.skipWaiting())
+    caches
+      .open(CACHE)
+      .then((cache) => cache.addAll(PRECACHE_RELS.map(absUrl)))
+      .then(() => self.skipWaiting())
   );
 });
 
